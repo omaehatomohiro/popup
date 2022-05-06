@@ -6,6 +6,7 @@
   "scripts": {
     "prod": "npx webpack --mode production",
     "dev": "npx webpack server",
+    "eslint": "npx eslint ./lib --ext ts,tsx",
     "test": "npx jest",
     "test:migrate": "npx ts-jest config:migrate jest.config.js"
   },
@@ -15,7 +16,10 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/user-event": "^14.1.1",
     "@types/jest": "^27.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
     "css-loader": "^6.7.1",
+    "eslint": "^8.14.0",
     "jest": "^28.0.3",
     "jest-environment-jsdom": "^28.0.2",
     "jsdom": "^19.0.0",
