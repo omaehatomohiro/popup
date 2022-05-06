@@ -6,19 +6,23 @@
   "scripts": {
     "prod": "npx webpack --mode production",
     "dev": "npx webpack server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest",
+    "test:migrate": "npx ts-jest config:migrate jest.config.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/jest": "^27.4.1",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/user-event": "^14.1.1",
+    "@types/jest": "^27.5.0",
     "css-loader": "^6.7.1",
-    "jest-localstorage-mock": "^2.4.21",
+    "jest": "^28.0.3",
+    "jest-environment-jsdom": "^28.0.2",
     "jsdom": "^19.0.0",
     "sass": "^1.50.1",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
-    "ts-jest": "^27.1.4",
+    "ts-jest": "^28.0.1",
     "ts-loader": "^9.2.8",
     "typescript": "^4.6.3",
     "webpack": "^5.72.0",
@@ -27,7 +31,6 @@
   },
   "dependencies": {
     "@types/js-cookie": "^3.0.1",
-    "@types/jsdom": "^16.2.14",
     "axios": "^0.26.1",
     "install": "^0.13.0"
   }

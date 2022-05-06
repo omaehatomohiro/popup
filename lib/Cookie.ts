@@ -2,7 +2,7 @@
 export default class Cookie {
     
     static getVal(key:string): string | null{
-        const cookies = window.document.cookie.split('; ');
+        const cookies = document.cookie.split('; ');
         let val = null;
         for(var i=0,len=cookies.length;i<len;i++){
             var cookie = cookies[i].split('=');
@@ -19,7 +19,7 @@ export default class Cookie {
         if(typeof hour === "number"){
             cookieString += ";max-age=" + hour * 60 * 60;
         }
-        window.document.cookie = cookieString;
+        document.cookie = cookieString;
     }
 
 }

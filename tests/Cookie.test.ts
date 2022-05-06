@@ -1,42 +1,25 @@
-import * as util from 'util'
-
-// ref: https://jestjs.io/docs/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
-// ref: https://github.com/jsdom/jsdom/issues/2524
-Object.defineProperty(window, 'TextEncoder', {
-  writable: true,
-  value: util.TextEncoder
-})
-Object.defineProperty(window, 'TextDecoder', {
-  writable: true,
-  value: util.TextDecoder
-})
-
 import Cookie from "../lib/Cookie";
-import jsdom from 'jsdom';
 
-const dom = new jsdom.JSDOM(``,{ url: "https://example.org/" });
-Object.defineProperty(window, 'document', {
+Object.defineProperty(document, 'cookie', {
     writable: true,
-    value: dom.window.document
-})
-
-
-test('Cookie setVal → getVal', () => {
-    let key = '_gidsagfisa';
-    let val = 'fsdagfsadgadfgsfdsa';
-
-    // const cookieJar = new jsdom.CookieJar(key, val);
-
-
-    Cookie.setVal(key, val);
-    let returnVal = Cookie.getVal(key);
-    expect(window).toBe(val);
+    value: 'status=active;_ga=testesttest',
 });
 
+const key = '_adpop';
+const val = 'sdfsdfadfasfsafadsfa';
+const additional = `;path=/;SameSite=None;secure;domain=${location.hostname}`;
 
+describe('Cookie.ts', () => {
 
-// test('Storage setItem getItem null', () => {
-//     let key = '_not_exsit_key';
-//     let returnVal = Storage.getItem(key);
-//     expect(returnVal).toBe(null);
-// });
+    test('getVal', () => {
+      document.cookie += `; ${key}=${val}`;
+      const returnVal = Cookie.getVal(key);
+      expect(returnVal).toBe(val);
+    });
+
+    test('Cookie setVal', () => {
+        const expectVal = `${key}=${val}${additional}`;
+        Cookie.setVal(key, val);
+        expect(document.cookie).toBe(expectVal);
+    });
+});

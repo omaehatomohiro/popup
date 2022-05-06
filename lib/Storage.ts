@@ -9,11 +9,11 @@ export default class Storage {
     static setItem(key: string, value: string, hour = null): void{
         localStorage.setItem(key, value);
         Cookie.setVal(key, value, hour);
-        // var cookieString = key + "=" + value + ";path=/;SameSite=None;secure;";
-        // if(typeof hour === "number"){
-        //     cookieString += ";max-age=" + hour * 60 * 60;
-        // }
-        // document.cookie = cookieString;
+        var cookieString = key + "=" + value + ";path=/;SameSite=None;secure;";
+        if(typeof hour === "number"){
+            cookieString += ";max-age=" + hour * 60 * 60;
+        }
+        document.cookie = cookieString;
     }
  
     static getItem(key:string): string | null{
@@ -23,14 +23,14 @@ export default class Storage {
         val = localStorage.getItem(key);
         if(Storage.checkValue(val)) return val;
 
-        // var cookies = document.cookie.split('; ');
-        // for(var i=0,len=cookies.length;i<len;i++){
-        //     var cookie = cookies[i].split('=');
-        //     if(cookie[0] === key){
-        //         val = cookie[1];
-        //         break;
-        //     }
-        // }
+        var cookies = document.cookie.split('; ');
+        for(var i=0,len=cookies.length;i<len;i++){
+            var cookie = cookies[i].split('=');
+            if(cookie[0] === key){
+                val = cookie[1];
+                break;
+            }
+        }
         val = Cookie.getVal(key);
         if(Storage.checkValue(val)) return val;
         

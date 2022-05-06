@@ -2,7 +2,7 @@
 
 export default class Redirect{
 
-    static clicked (obj:any) {
+    static clicked (obj: any) {
         let url:string = '?';
         for(const key in obj){
             url += `&${key}=${obj[key]}`;
