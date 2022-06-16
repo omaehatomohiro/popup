@@ -19,7 +19,7 @@ type BannerType = {
 
 
      /**
-      * Close AB testq
+      * Close AB test
       */
      defaultPath: string;
    
@@ -41,7 +41,7 @@ type BannerType = {
      pathC: string;
 }
 
-//abType?: string, //'versionA' | 'versionB' | null;
+// abType?: string, //'versionA' | 'versionB' | null;
 
 
 type EventType = {

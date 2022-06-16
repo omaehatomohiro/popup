@@ -6,14 +6,13 @@ import Redirect from './Redirect';
 import CountDown from './CountDown';
 import Banner from './Banner';
 import StorageHandler from './StorageHandler';
-import { storage } from 'googleapis/build/src/apis/storage';
 
 
 export default class Popup {
 
     eventType: string;
     adId:number;
-    historyActionFunc:any;
+    historyActionFunc: any;
     tabCloseActionFunc:any;
     blurActionFunc: any;
     scrollActionFunc: any;
