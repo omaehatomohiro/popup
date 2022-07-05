@@ -35,7 +35,7 @@ const config: ConfigType = {
     history: true,
     tabclose: true,
     blur: true,
-    countDown: true,
+    countDown: 0,
   },
 
   // {
