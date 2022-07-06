@@ -36,7 +36,7 @@ const config: ConfigType = {
     tabclose: true,
     blur: true,
     countDown: 1000000,
-    timer: 3000,
+    timer: 1000,
   },
 };
 

@@ -9,7 +9,7 @@ import ParamsHandler from "./ParamsHandler";
 
 export default class Popup {
   config: ConfigType;
-  eventType: string;
+  eventType: EventType;
   historyActionFunc: any;
   tabCloseActionFunc: any;
   blurActionFunc: any;
@@ -34,7 +34,7 @@ export default class Popup {
   }
 
   init(): any {
-    // StorageHandler.init(config.adId, config.banner.popupType);
+    StorageHandler.init(this.config.adId, this.config.banner.popupType);
     const params = new ParamsHandler();
     const remainingTime = params.getRemainingTime();
 
@@ -74,6 +74,7 @@ export default class Popup {
     this.timerId = setTimeout(
       function (popup) {
         console.log("timer!!");
+        popup.eventType = "timer";
         popup.commonAction();
       },
       10000,
@@ -139,7 +140,7 @@ export default class Popup {
 
   async redirectAction() {
     console.log("redirect action");
-    const storageObj = StorageHandler.updateAfterClick(this.eventType);
+    const storageObj = StorageHandler.getObj();
     Redirect.clicked(storageObj);
   }
 

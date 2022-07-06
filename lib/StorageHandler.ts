@@ -1,20 +1,11 @@
 import Storage from "./Storage";
 import Hash from "./Hash";
 
-interface StorageInterface {
-  uid: string;
-  adId: number;
-  popupType: number;
-  eventType: string;
-  abType: AbType;
-  position: string;
-}
-
 export default class StorageHandler {
-  private static key: string = "_adpop_session";
+  private static key = "_adpop_session";
 
   static init(adId: number, popupType: number): void {
-    const data: StorageInterface | null = StorageHandler.getStorageObj();
+    const data: StorageInterface | null = StorageHandler.getObj();
 
     let storageObj: StorageInterface;
 
@@ -30,71 +21,59 @@ export default class StorageHandler {
       };
 
       if (storageObj.popupType === 1) {
-        storageObj.abType = StorageHandler.calcRandom(popupType);
+        storageObj.abType = StorageHandler.calcAbType(popupType);
       }
       if (storageObj.popupType === 2) {
         storageObj.position = "ver_a";
       }
     } else {
-      // 過去に方法したユーザー
+      // 過去に訪問したユーザー
       storageObj = data;
 
+      //ADが違う場合
       if (adId !== storageObj.adId) {
-        // AD idが違うなら変更
-        storageObj.uid = Hash.create(16);
         storageObj.adId = adId;
+        storageObj.popupType = popupType;
+        storageObj.position = "";
       }
 
-      // ABテストで１番で、前回は
-      if (storageObj.popupType === 1 && adId !== storageObj.adId) {
-        storageObj.abType = StorageHandler.calcRandom(popupType);
+      if (storageObj.popupType === 1) {
+        storageObj.abType = StorageHandler.calcAbType(popupType);
       }
 
       if (storageObj.popupType === 2) {
         storageObj.position = "ver_a";
-      } else {
-        storageObj.position = "";
       }
     }
-
-    StorageHandler.setStorageObj(storageObj);
+    StorageHandler.setObj(storageObj);
   }
 
-  static updateEventType(eventType: string) {
-    const data: StorageInterface | null = StorageHandler.getStorageObj();
-    if (data === null) return false;
-    let storageObj: StorageInterface = data;
+  static updateEventType(eventType: EventType) {
+    const data = StorageHandler.getObj();
+    if (data === null) return null;
+    const storageObj: StorageInterface = data;
     storageObj.eventType = eventType;
-    StorageHandler.setStorageObj(storageObj);
-    return storageObj;
-  }
-
-  static updateAfterClick(eventType: string) {
-    const data: StorageInterface | null = StorageHandler.getStorageObj();
-    if (data === null) return false;
-    let storageObj: StorageInterface = data;
-    storageObj.eventType = eventType;
-    StorageHandler.setStorageObj(storageObj);
+    StorageHandler.setObj(storageObj);
     return storageObj;
   }
 
   static getAbType(): string {
-    const data: StorageInterface | null = StorageHandler.getStorageObj();
+    const data: StorageInterface | null = StorageHandler.getObj();
     if (data === null) return "";
     return data.abType;
   }
 
-  static getStorageObj(): StorageInterface | null {
+  static getObj(): StorageInterface | null {
     const json = Storage.getItem(StorageHandler.key);
     if (json === null) return null;
     return JSON.parse(json);
   }
 
-  static setStorageObj(obj: StorageInterface): void {
+  static setObj(obj: StorageInterface): void {
     Storage.setItem(StorageHandler.key, JSON.stringify(obj));
   }
 
-  static calcRandom(pupupType: number): "versionA" | "versionB" | "" {
+  static calcAbType(pupupType: number): AbType {
     if (pupupType !== 1) {
       return "";
     }

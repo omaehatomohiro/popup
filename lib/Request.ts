@@ -1,21 +1,21 @@
+import axios, { AxiosRequestConfig } from "axios";
 
-import axios,{AxiosRequestConfig} from 'axios';
+export default class Request {
+  static async implession(params: StorageInterface) {
+    const options: AxiosRequestConfig = {
+      url: "http://localhost:8080/imp/",
+      method: "GET",
+      params: params,
+    };
+    return axios(options);
+  }
 
-interface RequestInterface {
-    
+  static async clicked(params: StorageInterface) {
+    const options: AxiosRequestConfig = {
+      url: "http://localhost:8080/click/",
+      method: "GET",
+      params: params,
+    };
+    return axios(options);
+  }
 }
-
-export default class Request implements RequestInterface{
-
-    static async implession (params: any) {
-        console.log(params);
-        const options: AxiosRequestConfig = {
-            url: 'http://localhost:8080/',
-            method:'GET',
-            params: params
-        }
-        return axios(options);
-    }
-
-}
-

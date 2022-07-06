@@ -37,20 +37,35 @@ type BannerType = {
 
 // abType?: string, //'versionA' | 'versionB' | null;
 
-type EventType = {
-  history: boolean;
-  tabclose: boolean;
-  blur: boolean;
-  countDown: number;
-  timer: number;
-};
+// type EventType = {
+//   history: boolean;
+//   tabclose: boolean;
+//   blur: boolean;
+//   countDown: number;
+//   timer: number;
+// };
 
 type ConfigType = {
   adId: number;
   banner: BannerType;
-  event: EventType;
+  event: {
+    history: boolean;
+    tabclose: boolean;
+    blur: boolean;
+    countDown: number;
+    timer: number;
+  };
 };
 
 type AbType = "versionA" | "versionB" | "";
 type ScrollPositionType = "positionA" | "positionB" | "positionC" | "";
-declare const window: Window;
+type EventType = "blur" | "tabclose" | "timer" | "history" | "";
+
+interface StorageInterface {
+  uid: string;
+  adId: number;
+  popupType: number;
+  eventType: EventType;
+  abType: AbType;
+  position: string;
+}
