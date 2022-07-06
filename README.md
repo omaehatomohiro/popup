@@ -1,22 +1,23 @@
 - 本番用 public/pif/clk/v3
 - サンプル sample_Config.ts
 
-https://teratail.com/questions/318447
+#### production build
 
-type
-implession
-ab
+- dist/bundle.js
 
-\_adpop_json
+```
+npm run prod
+```
 
-{
+#### development（　 dev build & up webpack server 　）
 
-}
+- ファイル書き出しはされない
 
-popupType
+```
+npm run dev
+```
 
-adId
+##### access url
 
-abType a or b
-
-scrollTest
+- http://localhost:8080/
+- http://192.168.2.131:8080

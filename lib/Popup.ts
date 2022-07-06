@@ -5,6 +5,7 @@ import Redirect from "./Redirect";
 import CountDown from "./CountDown";
 import Banner from "./Banner";
 import StorageHandler from "./StorageHandler";
+import ParamsHandler from "./ParamsHandler";
 
 export default class Popup {
   eventType: string;
@@ -14,24 +15,37 @@ export default class Popup {
   blurActionFunc: any;
   scrollActionFunc: any;
   scrollTimerFunc: any;
-  position: string;
+  position: ScrollPositionType;
   timerId: any;
+  countdownTime: number;
 
   constructor() {
-    (this.eventType = ""), (this.adId = 1);
-    this.historyActionFunc = null;
-    this.tabCloseActionFunc = null;
-    this.blurActionFunc = null;
-    this.scrollActionFunc = null;
-    this.scrollTimerFunc = null;
+    this.adId = config.adId;
+    this.eventType = "";
     this.position = "";
-    this.timerId = null;
+    this.countdownTime = 0;
+    // this.historyActionFunc = null;
+    // this.tabCloseActionFunc = null;
+    // this.blurActionFunc = null;
+    // this.scrollActionFunc = null;
+    // this.scrollTimerFunc = null;
+    // this.position = "";
+    // this.timerId = null;
   }
 
-  init(): void {
-    StorageHandler.init(config.adId, config.banner.popupType);
+  init(): any {
+    // StorageHandler.init(config.adId, config.banner.popupType);
+    const params = new ParamsHandler();
+    const remainingTime = params.getRemainingTime();
+
+    if (remainingTime) {
+      this.countdownTime = remainingTime;
+    } else {
+      this.countdownTime = config.event.countDown;
+    }
+    console.log("remainingTime", remainingTime, this.countdownTime);
     const banner = Banner.getInstance();
-    banner.create();
+    banner.create(this.countdownTime);
   }
 
   setHistoryEvent() {
@@ -105,8 +119,10 @@ export default class Popup {
     clearTimeout(this.timerId);
 
     const sotrageObj = StorageHandler.updateEventType(this.eventType);
-    const countDown = CountDown.getInstance();
-    countDown.start("conterDiv", 1200000);
+    if (this.countdownTime) {
+      const countDown = CountDown.getInstance();
+      countDown.start("conterDiv", this.countdownTime);
+    }
 
     // remove events
     window.removeEventListener("popstate", this.historyActionFunc, false);

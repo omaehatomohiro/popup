@@ -20,16 +20,14 @@ type BannerType = {
   defaultPath: string;
 
   /**
-   * For ABテスト
+   * ABテスト A or Bの判別
    * versionA
    * versionB
    */
-
-  // A or Bの判別
   typeBPath: string;
 
   /**
-   * For Scroll テスト
+   * Scroll テスト
    */
   targetDomIdB: string;
   targetDomIdC: string;
@@ -52,3 +50,7 @@ type ConfigType = {
   banner: BannerType;
   event: EventType;
 };
+
+type AbType = "versionA" | "versionB" | "";
+type ScrollPositionType = "positionA" | "positionB" | "positionC" | "";
+declare const window: Window;

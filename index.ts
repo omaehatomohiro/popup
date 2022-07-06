@@ -1,5 +1,5 @@
-import Browser from "./lib/Browser";
 import config from "./config/Config";
+import Browser from "./lib/Browser";
 import Popup from "./lib/Popup";
 import "./scss/style.scss";
 
@@ -10,7 +10,6 @@ function main() {
     if (Browser.isIE()) return false;
 
     const popup = new Popup();
-
     popup.init();
 
     if (config.event.history) {

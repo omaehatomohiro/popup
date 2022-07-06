@@ -59,7 +59,7 @@ class Banner implements BannerInterface {
     this.pathC = config.banner.pathC;
   }
 
-  create(): void {
+  create(countdownTime: number): void {
     const container: HTMLDivElement = <HTMLDivElement>(
       document.createElement("div")
     );
@@ -75,7 +75,7 @@ class Banner implements BannerInterface {
     bannerLink.className = "popupBannerLinkWrap";
     const closeImage = document.createElement("img");
     closeImage.src = "https://ad-pop.bbo-tech.com/images/close.png";
-    let bannerImage: any;
+    let bannerImage: HTMLImageElement;
 
     // ABテストの場合
     if (this.popupType === 1) {
@@ -91,13 +91,13 @@ class Banner implements BannerInterface {
     bannerImage.className = "mainBannerImage";
     this.bannerImage = bannerImage;
 
-    // if (this.isCountdownEnable(this.timeMs)) {
-    const countDownDiv = document.createElement("div");
-    countDownDiv.id = "conterDiv";
-    countDownDiv.className = "countTimerWrap";
-    this.countDownDiv = countDownDiv;
-    bannerLink.appendChild(countDownDiv);
-    // }
+    if (countdownTime) {
+      const countDownDiv = document.createElement("div");
+      countDownDiv.id = "conterDiv";
+      countDownDiv.className = "countTimerWrap";
+      this.countDownDiv = countDownDiv;
+      bannerLink.appendChild(countDownDiv);
+    }
 
     bannerLink.appendChild(bannerImage);
     closeBtn.appendChild(closeImage);

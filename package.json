@@ -6,6 +6,7 @@
   "scripts": {
     "prod": "npx webpack --mode production",
     "dev": "npx webpack server",
+    "watch": "npx webpack --watch",
     "eslint": "npx eslint ./lib --ext ts,tsx",
     "test": "npx jest",
     "test:migrate": "npx ts-jest config:migrate jest.config.js"

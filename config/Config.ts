@@ -6,7 +6,7 @@ const config: ConfigType = {
      * 1・・・ABテスト
      * 2・・・スクロールテスト
      */
-    popupType: 2,
+    popupType: 0,
 
     /**
      * Close AB tes
@@ -35,8 +35,8 @@ const config: ConfigType = {
     history: true,
     tabclose: true,
     blur: true,
-    countDown: 0,
-    timer: 0,
+    countDown: 1000000,
+    timer: 1000000,
   },
 };
 
