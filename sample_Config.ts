@@ -36,22 +36,8 @@ const config: ConfigType = {
     tabclose: true,
     blur: true,
     countDown: 0,
+    timer: 0,
   },
-
-  // {
-  // timeMs: 10000, // false or number(ms)
-  // timerEvent: true, // boolean
-  // historyEvent: true, // boolean
-  // tabCloseEvent: true, // boolean
-  // blurEvent: true, // boolean
-  // // adId: cookieManager.setAdId('0005'), // AD（popup）のID
-  // // userId: cookieManager.setUserId(),
-  // // requestId: cookieManager.setRequestId(),
-  // // adcode: getQueryAdcode(),
-  // // pageUrl: getPageUrl(),
-  // timerMs: 100000, // timer time ms
-  // showCount: 1, // integer
-  // }
 };
 
 export default config;

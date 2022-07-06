@@ -44,6 +44,7 @@ type EventType = {
   tabclose: boolean;
   blur: boolean;
   countDown: number;
+  timer: number;
 };
 
 type ConfigType = {
