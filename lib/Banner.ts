@@ -1,4 +1,3 @@
-import config from "../config/Config";
 import StorageHandler from "./StorageHandler";
 
 interface BannerInterface {
@@ -42,24 +41,34 @@ class Banner implements BannerInterface {
   targetDomIdC: string;
   pathB: string;
   pathC: string;
+  countdownTime: number;
 
   constructor() {
     this.dom = <HTMLDivElement>document.createElement("div");
     this.closeBtn = <HTMLDivElement>document.createElement("div");
     this.bannerImage = <HTMLImageElement>document.createElement("img");
     this.countDownDiv = <HTMLDivElement>document.createElement("div");
-    this.popupType = config.banner.popupType;
     this.abType = StorageHandler.getAbType();
+    this.popupType = 0;
+    this.defaultPath = "";
+    this.typeBPath = "";
+    this.targetDomIdB = "";
+    this.targetDomIdC = "";
+    this.pathB = "";
+    this.pathC = "";
+    this.countdownTime = 0;
+  }
+
+  create(config: ConfigType): void {
     this.defaultPath = config.banner.defaultPath;
-    // this.typeAPath = config.banner.typeAPath;
+    this.popupType = config.banner.popupType;
     this.typeBPath = config.banner.typeBPath;
     this.targetDomIdB = config.banner.targetDomIdB;
     this.targetDomIdC = config.banner.targetDomIdC;
     this.pathB = config.banner.pathB;
     this.pathC = config.banner.pathC;
-  }
+    this.countdownTime = config.event.countDown;
 
-  create(countdownTime: number): void {
     const container: HTMLDivElement = <HTMLDivElement>(
       document.createElement("div")
     );
@@ -91,7 +100,7 @@ class Banner implements BannerInterface {
     bannerImage.className = "mainBannerImage";
     this.bannerImage = bannerImage;
 
-    if (countdownTime) {
+    if (this.countdownTime) {
       const countDownDiv = document.createElement("div");
       countDownDiv.id = "conterDiv";
       countDownDiv.className = "countTimerWrap";

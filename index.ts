@@ -9,7 +9,7 @@ function main() {
   try {
     if (Browser.isIE()) return false;
 
-    const popup = new Popup();
+    const popup = new Popup(config);
     popup.init();
 
     if (config.event.history) {

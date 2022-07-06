@@ -1,4 +1,4 @@
-import config from "../config/Config";
+// import config from "../config/Config";
 import { setHistory } from "./History";
 import Request from "./Request";
 import Redirect from "./Redirect";
@@ -8,8 +8,8 @@ import StorageHandler from "./StorageHandler";
 import ParamsHandler from "./ParamsHandler";
 
 export default class Popup {
+  config: ConfigType;
   eventType: string;
-  adId: number;
   historyActionFunc: any;
   tabCloseActionFunc: any;
   blurActionFunc: any;
@@ -17,13 +17,13 @@ export default class Popup {
   scrollTimerFunc: any;
   position: ScrollPositionType;
   timerId: any;
-  countdownTime: number;
 
-  constructor() {
-    this.adId = config.adId;
+  constructor(config: any) {
+    // this.adId = config.adId;
+    this.config = config;
     this.eventType = "";
     this.position = "";
-    this.countdownTime = 0;
+    //this.countdownTime = 0;
     // this.historyActionFunc = null;
     // this.tabCloseActionFunc = null;
     // this.blurActionFunc = null;
@@ -39,13 +39,12 @@ export default class Popup {
     const remainingTime = params.getRemainingTime();
 
     if (remainingTime) {
-      this.countdownTime = remainingTime;
-    } else {
-      this.countdownTime = config.event.countDown;
+      this.config.event.countDown = remainingTime;
     }
-    console.log("remainingTime", remainingTime, this.countdownTime);
+
+    console.log("remainingTime", this.config.event.countDown);
     const banner = Banner.getInstance();
-    banner.create(this.countdownTime);
+    banner.create(this.config);
   }
 
   setHistoryEvent() {
@@ -119,9 +118,9 @@ export default class Popup {
     clearTimeout(this.timerId);
 
     const sotrageObj = StorageHandler.updateEventType(this.eventType);
-    if (this.countdownTime) {
+    if (this.config.event.countDown) {
       const countDown = CountDown.getInstance();
-      countDown.start("conterDiv", this.countdownTime);
+      countDown.start("conterDiv", this.config.event.countDown);
     }
 
     // remove events
