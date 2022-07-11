@@ -1,4 +1,3 @@
-// import config from "../config/Config";
 import { setHistory } from "./History";
 import Request from "./Request";
 import Redirect from "./Redirect";
@@ -10,31 +9,23 @@ import ParamsHandler from "./ParamsHandler";
 export default class Popup {
   config: ConfigType;
   eventType: EventType;
+  abType: AbType;
+  position: ScrollPositionType;
+  timerId: any;
   historyActionFunc: any;
   tabCloseActionFunc: any;
   blurActionFunc: any;
   scrollActionFunc: any;
   scrollTimerFunc: any;
-  position: ScrollPositionType;
-  timerId: any;
 
   constructor(config: any) {
-    // this.adId = config.adId;
     this.config = config;
     this.eventType = "";
+    this.abType = "";
     this.position = "";
-    //this.countdownTime = 0;
-    // this.historyActionFunc = null;
-    // this.tabCloseActionFunc = null;
-    // this.blurActionFunc = null;
-    // this.scrollActionFunc = null;
-    // this.scrollTimerFunc = null;
-    // this.position = "";
-    // this.timerId = null;
   }
 
-  init(): any {
-    StorageHandler.init(this.config.adId, this.config.banner.popupType);
+  init(): void {
     const params = new ParamsHandler();
     const remainingTime = params.getRemainingTime();
 
@@ -42,9 +33,17 @@ export default class Popup {
       this.config.event.countDown = remainingTime;
     }
 
-    console.log("remainingTime", this.config.event.countDown);
+    const storage = StorageHandler.init(
+      this.config.adId,
+      this.config.banner.popupType,
+      this.config.event.countDown
+    );
+
+    this.abType = storage.abType;
+
     const banner = Banner.getInstance();
     banner.create(this.config);
+    this.abType = banner.abType;
   }
 
   setHistoryEvent() {
@@ -84,6 +83,7 @@ export default class Popup {
 
   setRedirectEvent() {
     const banner = Banner.getInstance();
+    console.log(banner.dom);
     banner.dom.addEventListener("click", this.redirectAction.bind(this));
   }
 
@@ -98,7 +98,7 @@ export default class Popup {
    */
   historyAction() {
     console.log("history action");
-    this.eventType = "popup";
+    this.eventType = "history";
     if (history.state !== "popupReady") return;
     this.commonAction();
   }
@@ -118,7 +118,9 @@ export default class Popup {
   commonAction() {
     clearTimeout(this.timerId);
 
-    const sotrageObj = StorageHandler.updateEventType(this.eventType);
+    const storageObj: ParamsType | null = StorageHandler.updateEventType(
+      this.eventType
+    );
     if (this.config.event.countDown) {
       const countDown = CountDown.getInstance();
       countDown.start("conterDiv", this.config.event.countDown);
@@ -135,13 +137,27 @@ export default class Popup {
     banner.open();
 
     // send impression request
-    Request.implession(sotrageObj);
+    const data = this.createData(
+      this.config,
+      this.eventType,
+      this.abType,
+      this.position,
+      storageObj
+    );
+    Request.implession(data);
   }
 
   async redirectAction() {
     console.log("redirect action");
     const storageObj = StorageHandler.getObj();
-    Redirect.clicked(storageObj);
+    const data = this.createData(
+      this.config,
+      this.eventType,
+      this.abType,
+      this.position,
+      storageObj
+    );
+    Redirect.clicked(data);
   }
 
   removeAction(e: Event) {
@@ -187,5 +203,23 @@ export default class Popup {
         banner.imgSwitchToC();
       }
     }
+  }
+
+  createData(
+    config: ConfigType,
+    eventType: EventType,
+    abtype: AbType,
+    position: ScrollPositionType,
+    storageObj: ParamsType | null
+  ): ParamsType {
+    const params: ParamsType = {
+      adId: config.adId,
+      popupType: config.banner.popupType,
+      eventType: eventType,
+      abType: abtype,
+      position: position,
+      remainingTime: storageObj ? storageObj.remainingTime : 0,
+    };
+    return params;
   }
 }

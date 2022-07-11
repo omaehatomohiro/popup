@@ -1,17 +1,18 @@
+import StorageHandler from "./StorageHandler";
+
 export default class CountDown {
   private static instance: CountDown;
 
   private timerId: any;
 
   start(targetDomID: string, countDonwTime: number) {
-    console.log(countDonwTime);
     const targetDom = document.getElementById(targetDomID);
     if (targetDom === null) {
       console.log("countDown dom is not found.");
       return false;
     }
 
-    let time = countDonwTime;
+    let time: number = countDonwTime;
     this.timerId = setInterval(
       function (banner) {
         time -= 1000;
@@ -41,6 +42,7 @@ export default class CountDown {
           "分" +
           banner.zeroFill(sc) +
           "秒";
+        StorageHandler.updateRemainingTime(time);
       },
       1000,
       this

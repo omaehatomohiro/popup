@@ -1,11 +1,3 @@
-type StorageObject = {
-  session: string;
-  adId: number;
-  popupType: number;
-  // clicked: number,
-  // abType?:string
-};
-
 type BannerType = {
   /**
    * 0・・・通常
@@ -35,16 +27,6 @@ type BannerType = {
   pathC: string;
 };
 
-// abType?: string, //'versionA' | 'versionB' | null;
-
-// type EventType = {
-//   history: boolean;
-//   tabclose: boolean;
-//   blur: boolean;
-//   countDown: number;
-//   timer: number;
-// };
-
 type ConfigType = {
   adId: number;
   banner: BannerType;
@@ -61,11 +43,19 @@ type AbType = "versionA" | "versionB" | "";
 type ScrollPositionType = "positionA" | "positionB" | "positionC" | "";
 type EventType = "blur" | "tabclose" | "timer" | "history" | "";
 
-interface StorageInterface {
-  uid: string;
+type StorageObjectType = {
+  adId: number;
+  popupType: number;
+  // eventType: EventType;
+  abType: AbType;
+  remainingTime: number;
+};
+
+type ParamsType = {
   adId: number;
   popupType: number;
   eventType: EventType;
   abType: AbType;
   position: string;
-}
+  remainingTime: number;
+};

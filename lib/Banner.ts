@@ -35,7 +35,7 @@ class Banner implements BannerInterface {
   countDownDiv: HTMLDivElement;
   popupType: number;
   defaultPath: string;
-  abType: string;
+  abType: AbType;
   typeBPath: string;
   targetDomIdB: string;
   targetDomIdC: string;
@@ -48,7 +48,7 @@ class Banner implements BannerInterface {
     this.closeBtn = <HTMLDivElement>document.createElement("div");
     this.bannerImage = <HTMLImageElement>document.createElement("img");
     this.countDownDiv = <HTMLDivElement>document.createElement("div");
-    this.abType = StorageHandler.getAbType();
+    this.abType = "";
     this.popupType = 0;
     this.defaultPath = "";
     this.typeBPath = "";
@@ -131,10 +131,10 @@ class Banner implements BannerInterface {
   }
 
   selectAbImg(): string {
-    if (this.abType === "verA") {
+    if (this.abType === "versionA") {
       return this.defaultPath;
     }
-    if (this.abType === "verB") {
+    if (this.abType === "versionB") {
       return this.typeBPath;
     }
     return this.defaultPath;

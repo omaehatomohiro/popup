@@ -1,8 +1,8 @@
-#popupNormalContainer{
+#popupNormalContainer {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  background-color: rgba(0,0,0,0.6);
-  position:fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
@@ -11,18 +11,18 @@
   height: 100%;
   z-index: -10;
   opacity: 0;
-  transition: .3s;
-  &.active{
+  transition: 0.3s;
+  &.active {
     z-index: 9999;
     opacity: 1;
   }
 
-  img{
-    max-width:100%;
+  img {
+    max-width: 100%;
     height: auto;
   }
 
-  & > div{
+  & > div {
     position: fixed;
     top: 50%;
     bottom: 0;
@@ -33,13 +33,13 @@
     text-align: center;
     transform: translate(0, -50%);
     margin: auto;
-    & > div{
+    & > div {
       display: inline-block;
       width: 300px;
     }
   }
 
-  .normalCloseBtn{
+  .normalCloseBtn {
     z-index: 1000;
     opacity: 1;
     visibility: visible;
@@ -50,10 +50,10 @@
     padding: 6px 0 0px 20px;
     cursor: pointer;
     margin: 0 0 0 auto;
-    box-sizing:border-box;
+    box-sizing: border-box;
   }
 
-  .popupBannerLinkWrap{
+  .popupBannerLinkWrap {
     cursor: pointer;
     position: relative;
     height: 300px;
@@ -63,42 +63,38 @@
     // }
   }
 
-
-  .countTimerWrap{
+  .countTimerWrap {
     position: absolute;
     z-index: 9999;
-    top: 8px;
+    top: 10px;
     right: 12px;
     text-align: right;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
     line-height: 1;
     font-family: sans-serif;
   }
 
-  .confirmPopupBtn{
+  .confirmPopupBtn {
     width: 276px;
     height: 50px;
     position: absolute;
     left: 0;
     right: 0;
-    bottom:18px;
+    bottom: 18px;
     z-index: 100;
     margin: 0 auto;
     cursor: pointer;
     transition: 0.2s all ease;
-    &:hover{
+    &:hover {
       opacity: 0.7;
     }
   }
-
 }
 
-
-
-#popupFullscreenContainer{
-  background-color: rgba(0,0,0,0.6);
-  position:fixed;
+#popupFullscreenContainer {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -107,14 +103,13 @@
   transform: translateX(-100%);
   z-index: 9999;
   opacity: 1;
-  transition: .1s;
-  &.active{
+  transition: 0.1s;
+  &.active {
     transform: translateX(0);
-    
   }
 
-  img{
-    max-width:100%;
+  img {
+    max-width: 100%;
     height: auto;
   }
 }
